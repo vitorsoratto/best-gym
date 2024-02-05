@@ -12,8 +12,11 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [validateData, setValidateData] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   const handleSignup = async () => {
+    setSuccess(false);
+    setFailed(false);
     setValidateData(true);
     try {
       if (name.trim() === '' || !validator.isEmail(email) || password.trim() === '') return;
@@ -23,6 +26,8 @@ const Signup = () => {
 
       if (response.status === 201) setSuccess(true);
     } catch (error) {
+      setSuccess(false);
+      setFailed(true);
       console.error(error.response?.data);
     }
   };
@@ -71,12 +76,19 @@ const Signup = () => {
           <Button label='Cadastrar' onClick={handleSignup} />
           {success && (
             <div>
-              <Message className='success-message' severity='success' text='Usuário cadastro com sucesso!' />
+              <Message
+                className='message'
+                severity='success'
+                text='Usuário cadastro com sucesso!'
+              />
               <span className='login-redirect'>
                 <a href='/login'>Clique aqui</a>
                 &nbsp;para entrar.
               </span>
             </div>
+          )}
+          {failed && (
+            <Message className='message' severity='error' text='Erro ao cadastrar usuário, ' />
           )}
         </div>
       </div>

@@ -8,6 +8,7 @@ a {
   margin: 0 auto;
   margin-top: 10%;
   padding: 20px;
+  transition: all 300ms ease-in-out;
 }
 
 .signup-main {
@@ -18,7 +19,7 @@ a {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.18);
 }
 
-.singup-main h2 {
+.signup-main h2 {
   text-align: center;
   color: #333;
 }
@@ -33,6 +34,15 @@ a {
   margin-top: 0 auto;
   text-align: center;
   color: #333;
+}
+
+.login-redirect {
+  margin: 20px 5px;
+  font-size: 11pt;
+}
+
+.success-message {
+  margin-top: 20px;
 }
 
 .p-fluid {

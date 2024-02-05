@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
+import { Message } from 'primereact/message';
 import validator from 'validator';
 
 import '../styles/Signup.css';
@@ -10,6 +11,7 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validateData, setValidateData] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleSignup = async () => {
     setValidateData(true);
@@ -19,7 +21,7 @@ const Signup = () => {
       const userData = { name, email, password };
       const response = await signup(userData);
 
-      console.log(response);
+      if (response.status === 201) setSuccess(true);
     } catch (error) {
       console.error(error.response?.data);
     }
@@ -67,6 +69,15 @@ const Signup = () => {
             )}
           </div>
           <Button label='Cadastrar' onClick={handleSignup} />
+          {success && (
+            <div>
+              <Message className='success-message' severity='success' text='Usuário cadastro com sucesso!' />
+              <span className='login-redirect'>
+                <a href='/login'>Clique aqui</a>
+                &nbsp;para entrar.
+              </span>
+            </div>
+          )}
         </div>
       </div>
       <div className='signup-link'>

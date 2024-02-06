@@ -56,7 +56,7 @@ const Dashboard = () => {
   const generalTabItem = () => {
     switch (generalActiveIndex) {
       case 0:
-        return <GymTab />;
+        return <GymTab user={user} />;
       case 1:
         return (
           <div>

@@ -6,7 +6,8 @@ import { Button } from 'primereact/button';
 import GymForm from './GymForm';
 import GymTable from './GymTable';
 
-const GymTab = () => {
+const GymTab = ({ user }) => {
+  const isAdmin = user?.role === 'admin';
   const [gyms, setGyms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedGym, setSelectedGym] = useState(null);
@@ -18,23 +19,44 @@ const GymTab = () => {
     }
 
     if (selectedGym !== null && type === 'new') {
-        return;
+      return;
     }
 
     if (type === 'delete') {
-        await deleteGym(selectedGym.id);
-        window.location.reload();
-        return;
+      await deleteGym(selectedGym.id);
+      window.location.reload();
+      return;
     }
 
     setChangeGym(true);
   };
 
-  const toolbarItens = (
+  const adminToolbarItens = (
     <React.Fragment>
-      <Button icon='pi pi-plus' className='mr-2' severity='success' onClick={(_) => handleToolbarClick('new')} />
+      <Button
+        icon='pi pi-plus'
+        className='mr-2'
+        severity='success'
+        onClick={(_) => handleToolbarClick('new')}
+      />
       <Button icon='pi pi-pencil' className='mr-2' onClick={(_) => handleToolbarClick('edit')} />
-      <Button icon='pi pi-trash' className='mr-2' severity='danger' onClick={(_) => handleToolbarClick('delete')} />
+      <Button
+        icon='pi pi-trash'
+        className='mr-2'
+        severity='danger'
+        onClick={(_) => handleToolbarClick('delete')}
+      />
+    </React.Fragment>
+  );
+
+  const userToolbarItens = (
+    <React.Fragment>
+      <Button
+        icon='pi pi-plus'
+        className='mr-2'
+        severity='success'
+        onClick={(_) => handleToolbarClick('checkin')}
+      />
     </React.Fragment>
   );
 
@@ -61,7 +83,7 @@ const GymTab = () => {
   } else {
     return (
       <GymTable
-        toolbarItens={toolbarItens}
+        toolbarItens={isAdmin ? adminToolbarItens : userToolbarItens}
         gyms={gyms}
         selectedGym={selectedGym}
         setSelectedGym={setSelectedGym}

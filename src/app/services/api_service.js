@@ -30,7 +30,7 @@ export const login = async (userData) => {
     });
     return response;
   } catch (error) {
-    handleUnauthorized(error);
+   throw error; 
   }
 };
 

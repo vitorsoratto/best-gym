@@ -1,0 +1,19 @@
+.main-header {
+  padding: 20px;
+}
+
+.main-logo {
+    font-size: 18px;
+    font-weight: bold;
+    color: #212121;
+    margin-right: 5px;
+}
+
+.card-container {
+  height: 100%;
+  width: 98%;
+  margin: 0 auto;
+  margin-top: 20px;
+  background-color: #f4f4f4;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.12);
+}

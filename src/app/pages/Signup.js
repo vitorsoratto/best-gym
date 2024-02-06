@@ -34,70 +34,68 @@ const Signup = () => {
 
   return (
     <div className='signup-container'>
-      <form onSubmit={handleSignup}>
-        <div className='signup-main'>
-          <h2>Cadastro</h2>
-          <div className='p-fluid'>
-            <div className='p-field'>
-              <label htmlFor='name'>Nome</label>
-              <InputText
-                id='name'
-                type='text'
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              {validateData && name.trim() === '' && (
-                <small className='p-error'>O nome é obrigatório</small>
-              )}
-            </div>
-            <div className='p-field'>
-              <label htmlFor='email'>E-mail</label>
-              <InputText
-                id='email'
-                type='text'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {validateData && !validator.isEmail(email) && (
-                <small className='p-error'>Insira um e-mail válido!</small>
-              )}
-            </div>
-            <div className='p-field'>
-              <label htmlFor='password'>Senha</label>
-              <InputText
-                id='password'
-                type='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {validateData && password.trim() === '' && (
-                <small className='p-error'>A senha é obrigatória</small>
-              )}
-            </div>
-            <Button label='Cadastrar' onClick={handleSignup} />
-            {success && (
-              <div>
-                <Message
-                  className='message'
-                  severity='success'
-                  text='Usuário cadastro com sucesso!'
-                />
-                <span className='login-redirect'>
-                  <a href='/login'>Clique aqui</a>
-                  &nbsp;para entrar.
-                </span>
-              </div>
-            )}
-            {failed && (
-              <Message className='message' severity='error' text='Erro ao cadastrar usuário, ' />
+      <div className='signup-main'>
+        <h2>Cadastro</h2>
+        <div className='p-fluid'>
+          <div className='p-field'>
+            <label htmlFor='name'>Nome</label>
+            <InputText
+              id='name'
+              type='text'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            {validateData && name.trim() === '' && (
+              <small className='p-error'>O nome é obrigatório</small>
             )}
           </div>
+          <div className='p-field'>
+            <label htmlFor='email'>E-mail</label>
+            <InputText
+              id='email'
+              type='text'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {validateData && !validator.isEmail(email) && (
+              <small className='p-error'>Insira um e-mail válido!</small>
+            )}
+          </div>
+          <div className='p-field'>
+            <label htmlFor='password'>Senha</label>
+            <InputText
+              id='password'
+              type='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {validateData && password.trim() === '' && (
+              <small className='p-error'>A senha é obrigatória</small>
+            )}
+          </div>
+          <Button label='Cadastrar' onClick={handleSignup} />
+          {success && (
+            <div>
+              <Message
+                className='message'
+                severity='success'
+                text='Usuário cadastro com sucesso!'
+              />
+              <span className='login-redirect'>
+                <a href='/'>Clique aqui</a>
+                &nbsp;para entrar.
+              </span>
+            </div>
+          )}
+          {failed && (
+            <Message className='message' severity='error' text='Erro ao cadastrar usuário, ' />
+          )}
         </div>
-      </form>
+      </div>
       <div className='signup-link'>
         <span>
           Já tem conta?&nbsp;
-          <a href='/login'>Entrar.</a>
+          <a href='/'>Entrar.</a>
         </span>
       </div>
     </div>

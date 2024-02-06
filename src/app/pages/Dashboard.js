@@ -32,6 +32,9 @@ const generalTabItens = [
   {
     label: 'Usuários',
   },
+  {
+    label: 'Checkins',
+  },
 ];
 
 const Dashboard = () => {
@@ -58,9 +61,17 @@ const Dashboard = () => {
       case 0:
         return <GymTab user={user} />;
       case 1:
+        if (user.role === 'admin') {
+          return (
+            <div>
+              <h1>Usuários</h1>
+            </div>
+          );
+        } else return;
+      case 2:
         return (
           <div>
-            <h1>Usuários</h1>
+            <h1>Checkins</h1>
           </div>
         );
       default:

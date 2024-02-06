@@ -5,14 +5,14 @@ const baseURL = 'http://localhost:8000';
 
 const handleUnauthorized = async (error) => {
   if (error.response?.status === 401) {
-    console.log('Unauthorized');
-    sessionStorage.removeItem('token');
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    window.location.href = '/';
+    // sessionStorage.removeItem('token');
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    // window.location.href = '/';
+    console.log(error);
   } else {
     throw error;
   }
-}
+};
 
 const api = axios.create({
   baseURL,
@@ -30,7 +30,7 @@ export const login = async (userData) => {
     });
     return response;
   } catch (error) {
-   throw error; 
+    throw error;
   }
 };
 
@@ -48,7 +48,6 @@ export const signup = async (userData) => {
 };
 
 export const getUserProfile = async () => {
-
   try {
     const response = await api.get('/api/user/profile', {
       headers: {
@@ -98,7 +97,7 @@ export const editGym = async (gym) => {
   } catch (error) {
     handleUnauthorized(error);
   }
-}
+};
 
 export const deleteGym = async (gymId) => {
   try {
@@ -111,4 +110,33 @@ export const deleteGym = async (gymId) => {
   } catch (error) {
     handleUnauthorized(error);
   }
-}
+};
+
+export const checkin = async (gymId) => {
+  try {
+    const response = await api.post(`/api/checkin/`, { gym_id: gymId }, {
+      headers: {
+        Authorization: `Bearer ${getStringToken()}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    if (error.response?.status === 400) {
+      return { error: error.response.data.message, status: 400};
+    }
+    handleUnauthorized(error);
+  }
+};
+
+export const getCheckinList = async () => {
+  try {
+    const response = await api.get('/api/checkin', {
+      headers: {
+        Authorization: `Bearer ${getStringToken()}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    handleUnauthorized(error);
+  }
+};

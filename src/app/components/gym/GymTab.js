@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
-import { getGymList, deleteGym } from '../../services/api_service';
+import { getGymList, deleteGym, checkin } from '../../services/api_service';
 import { Button } from 'primereact/button';
+import { Toast } from 'primereact/toast';
 
 import GymForm from './GymForm';
 import GymTable from './GymTable';
 
 const GymTab = ({ user }) => {
+  const toast = React.createRef();
+  const showToast = (severity, summary, detail) => {
+    toast.current.show({ severity, summary, detail, life: 3000 });
+  };
+
   const isAdmin = user?.role === 'admin';
   const [gyms, setGyms] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +20,7 @@ const GymTab = ({ user }) => {
   const [changeGym, setChangeGym] = useState(false);
 
   const handleToolbarClick = async (type) => {
-    if (selectedGym === null && (type === 'edit' || type === 'delete')) {
+    if (selectedGym === null && (type === 'edit' || type === 'delete' || type === 'checkin')) {
       return;
     }
 
@@ -26,6 +32,22 @@ const GymTab = ({ user }) => {
       await deleteGym(selectedGym.id);
       window.location.reload();
       return;
+    }
+
+    if (type === 'checkin') {
+      const response = await checkin(selectedGym.id);
+      if (response.status === 400) {
+        showToast('error', 'Erro', 'Só é permitido um checkin por dia');
+        return;
+      } else if (response.status !== 201) {
+        showToast('error', 'Erro', 'Erro ao realizar checkin');
+        return;
+      }
+
+      if (response.status === 201) {
+        showToast('success', 'Sucesso', 'Checkin realizado com sucesso');
+        return;
+      }
     }
 
     setChangeGym(true);
@@ -82,12 +104,15 @@ const GymTab = ({ user }) => {
     return <GymForm gym={selectedGym} setChangeGym={setChangeGym} />;
   } else {
     return (
-      <GymTable
-        toolbarItens={isAdmin ? adminToolbarItens : userToolbarItens}
-        gyms={gyms}
-        selectedGym={selectedGym}
-        setSelectedGym={setSelectedGym}
-      />
+      <div>
+        <Toast ref={toast} />
+        <GymTable
+          toolbarItens={isAdmin ? adminToolbarItens : userToolbarItens}
+          gyms={gyms}
+          selectedGym={selectedGym}
+          setSelectedGym={setSelectedGym}
+        />
+      </div>
     );
   }
 };

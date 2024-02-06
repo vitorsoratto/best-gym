@@ -6,6 +6,7 @@ import { Toast } from 'primereact/toast';
 
 import GymForm from './GymForm';
 import GymTable from './GymTable';
+import { Message } from 'primereact/message';
 
 const GymTab = ({ user }) => {
   const toast = React.createRef();
@@ -73,12 +74,16 @@ const GymTab = ({ user }) => {
 
   const userToolbarItens = (
     <React.Fragment>
-      <Button
-        icon='pi pi-plus'
-        className='mr-2'
-        severity='success'
-        onClick={(_) => handleToolbarClick('checkin')}
-      />
+      <div>
+        <Button
+          icon='pi pi-plus'
+          label='Checkin'
+          className='mr-2'
+          severity='success'
+          onClick={(_) => handleToolbarClick('checkin')}
+        />
+        {selectedGym && selectedGym?.name && <Message severity='info' text={"Academia: " + selectedGym.name}/>}
+      </div>
     </React.Fragment>
   );
 

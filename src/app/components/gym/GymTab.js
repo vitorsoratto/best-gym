@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { getGymList } from '../../services/api_service';
+import { getGymList, deleteGym } from '../../services/api_service';
 import { Button } from 'primereact/button';
 
 import GymForm from './GymForm';
@@ -12,12 +12,18 @@ const GymTab = () => {
   const [selectedGym, setSelectedGym] = useState(null);
   const [changeGym, setChangeGym] = useState(false);
 
-  const handleToolbarClick = (type) => {
-    if (selectedGym === null && type === 'edit') {
+  const handleToolbarClick = async (type) => {
+    if (selectedGym === null && (type === 'edit' || type === 'delete')) {
       return;
     }
 
     if (selectedGym !== null && type === 'new') {
+        return;
+    }
+
+    if (type === 'delete') {
+        await deleteGym(selectedGym.id);
+        window.location.reload();
         return;
     }
 
@@ -26,8 +32,9 @@ const GymTab = () => {
 
   const toolbarItens = (
     <React.Fragment>
-      <Button icon='pi pi-plus' className='mr-2' onClick={(_) => handleToolbarClick('new')} />
+      <Button icon='pi pi-plus' className='mr-2' severity='success' onClick={(_) => handleToolbarClick('new')} />
       <Button icon='pi pi-pencil' className='mr-2' onClick={(_) => handleToolbarClick('edit')} />
+      <Button icon='pi pi-trash' className='mr-2' severity='danger' onClick={(_) => handleToolbarClick('delete')} />
     </React.Fragment>
   );
 

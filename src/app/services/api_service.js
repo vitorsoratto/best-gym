@@ -135,6 +135,11 @@ export const getCheckinList = async () => {
         Authorization: `Bearer ${getStringToken()}`,
       },
     });
+
+    response.data.forEach(checkin => {
+     checkin.created_at = new Date(checkin.created_at).toLocaleString(); 
+    });
+
     return response;
   } catch (error) {
     handleUnauthorized(error);

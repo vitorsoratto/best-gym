@@ -8,6 +8,7 @@ import { TabMenu } from 'primereact/tabmenu';
 import { getUserProfile } from '../services/api_service';
 import { getStringToken } from '../utils/util';
 import GymTab from '../components/gym/GymTab';
+import CheckinTab from '../components/checkin/CheckinTab';
 
 const headerItens = [
   {
@@ -69,11 +70,7 @@ const Dashboard = () => {
           );
         } else return;
       case 2:
-        return (
-          <div>
-            <h1>Checkins</h1>
-          </div>
-        );
+        return <CheckinTab />;
       default:
         break;
     }

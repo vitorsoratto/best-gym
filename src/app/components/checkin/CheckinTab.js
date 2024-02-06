@@ -10,14 +10,10 @@ const CheckinTab = () => {
 
   useEffect(() => {
     const fetchCheckins = async () => {
-      try {
-        setLoading(true);
-        const response = await getCheckinList();
-        setCheckins(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
+      setLoading(true);
+      const response = await getCheckinList();
+      setCheckins(response.data);
+      setLoading(false);
     };
     fetchCheckins();
   }, []);

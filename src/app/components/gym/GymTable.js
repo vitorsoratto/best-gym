@@ -4,7 +4,6 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toolbar } from 'primereact/toolbar';
 import { FilterMatchMode } from 'primereact/api';
-import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 
 const GymTable = ({ toolbarItens, gyms, selectedGym, setSelectedGym }) => {

@@ -10,6 +10,8 @@ import { getStringToken } from '../utils/util';
 import GymTab from '../components/gym/GymTab';
 import CheckinTab from '../components/checkin/CheckinTab';
 
+import { getGymList, getCheckinList } from '../services/api_service';
+
 const headerItens = [
   {
     label: 'Home',
@@ -23,18 +25,6 @@ const headerItens = [
       sessionStorage.removeItem('token');
       window.location.reload();
     },
-  },
-];
-
-const generalTabItens = [
-  {
-    label: 'Academias',
-  },
-  {
-    label: 'Usuários',
-  },
-  {
-    label: 'Checkins',
   },
 ];
 
@@ -57,10 +47,31 @@ const Dashboard = () => {
   const [user, setUser] = useState({});
   const [generalActiveIndex, setGeneralActiveTab] = useState(0);
 
+  const isAdmin = user?.role === 'admin';
+
+  const adminTabItens = [
+    {
+      label: 'Academias',
+    },
+    {
+      label: 'Usuários',
+    },
+  ];
+  
+  const userTabItens = [
+    {
+      label: 'Academias',
+    },
+    {
+      label: 'Checkins',
+    },
+  ];
+
   const generalTabItem = () => {
     switch (generalActiveIndex) {
       case 0:
-        return <GymTab user={user} />;
+        const gymList = getGymList().then((response) => response.data);
+        return <GymTab user={user} gymList={gymList}/>;
       case 1:
         if (user.role === 'admin') {
           return (
@@ -85,7 +96,7 @@ const Dashboard = () => {
       </div>
       <div className='card-container' style={{ padding: '30px' }}>
         <TabMenu
-          model={generalTabItens}
+          model={isAdmin ? adminTabItens : userTabItens}
           activeIndex={generalActiveIndex}
           onTabChange={(e) => setGeneralActiveTab(e.index)}
         />

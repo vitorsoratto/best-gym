@@ -82,21 +82,19 @@ const GymTab = ({ user }) => {
           severity='success'
           onClick={(_) => handleToolbarClick('checkin')}
         />
-        {selectedGym && selectedGym?.name && <Message severity='info' text={"Academia: " + selectedGym.name}/>}
+        {selectedGym && selectedGym?.name && (
+          <Message severity='info' text={'Academia: ' + selectedGym.name} />
+        )}
       </div>
     </React.Fragment>
   );
 
   useEffect(() => {
     const fetchGyms = async () => {
-      try {
-        setLoading(true);
-        const response = await getGymList();
-        setGyms(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
+      setLoading(true);
+      const response = await getGymList();
+      setGyms(response.data);
+      setLoading(false);
     };
     fetchGyms();
   }, []);

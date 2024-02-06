@@ -44,6 +44,7 @@ const Dashboard = () => {
 
   const [user, setUser] = useState({});
   const [generalActiveIndex, setGeneralActiveIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState(<GymTab user={user} />);
 
   const tabItens = [
     {
@@ -67,8 +68,6 @@ const Dashboard = () => {
         break;
     }
   };
-
-  const [activeTab, setActiveTab] = useState(null);
 
   return (
     <div className='container'>

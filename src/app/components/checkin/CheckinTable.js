@@ -5,7 +5,6 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 
 const CheckinTable = ({ checkins }) => {
-  console.log(checkins);
   return (
     <div>
       <DataTable stripedRows value={checkins} rowsPerPageOptions={[20, 50]} dataKey='id' metaKeySelection={false}>

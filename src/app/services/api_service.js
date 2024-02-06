@@ -5,9 +5,9 @@ const baseURL = 'http://localhost:8000';
 
 const handleUnauthorized = async (error) => {
   if (error.response?.status === 401) {
-    // sessionStorage.removeItem('token');
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
-    // window.location.href = '/';
+    sessionStorage.removeItem('token');
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    window.location.href = '/';
     console.log(error);
   } else {
     throw error;

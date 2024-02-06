@@ -10,8 +10,6 @@ import { getStringToken } from '../utils/util';
 import GymTab from '../components/gym/GymTab';
 import CheckinTab from '../components/checkin/CheckinTab';
 
-import { getGymList, getCheckinList } from '../services/api_service';
-
 const headerItens = [
   {
     label: 'Home',
@@ -45,20 +43,9 @@ const Dashboard = () => {
   }, []);
 
   const [user, setUser] = useState({});
-  const [generalActiveIndex, setGeneralActiveTab] = useState(0);
+  const [generalActiveIndex, setGeneralActiveIndex] = useState(0);
 
-  const isAdmin = user?.role === 'admin';
-
-  const adminTabItens = [
-    {
-      label: 'Academias',
-    },
-    {
-      label: 'Usuários',
-    },
-  ];
-  
-  const userTabItens = [
+  const tabItens = [
     {
       label: 'Academias',
     },
@@ -67,25 +54,22 @@ const Dashboard = () => {
     },
   ];
 
-  const generalTabItem = () => {
-    switch (generalActiveIndex) {
+  const generalTabItem = (e) => {
+    if (generalActiveIndex === e) return;
+    switch (e) {
       case 0:
-        const gymList = getGymList().then((response) => response.data);
-        return <GymTab user={user} gymList={gymList}/>;
+        setActiveTab(<GymTab user={user} />);
+        break;
       case 1:
-        if (user.role === 'admin') {
-          return (
-            <div>
-              <h1>Usuários</h1>
-            </div>
-          );
-        } else return;
-      case 2:
-        return <CheckinTab />;
+        setActiveTab(<CheckinTab />);
+        break;
       default:
         break;
     }
   };
+
+  const [activeTab, setActiveTab] = useState(null);
+
   return (
     <div className='container'>
       <div className='main-header'>
@@ -96,11 +80,14 @@ const Dashboard = () => {
       </div>
       <div className='card-container' style={{ padding: '30px' }}>
         <TabMenu
-          model={isAdmin ? adminTabItens : userTabItens}
+          model={tabItens}
           activeIndex={generalActiveIndex}
-          onTabChange={(e) => setGeneralActiveTab(e.index)}
+          onTabChange={(e) => {
+            generalTabItem(e.index);
+            setGeneralActiveIndex(e.index);
+          }}
         />
-        {generalTabItem()}
+        {activeTab}
       </div>
     </div>
   );

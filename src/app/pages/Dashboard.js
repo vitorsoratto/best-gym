@@ -52,7 +52,6 @@ const Dashboard = () => {
 
   const [user, setUser] = useState({});
   const [generalActiveIndex, setGeneralActiveTab] = useState(0);
-  const [academyActiveIndex, setAcademyActiveTab] = useState(0);
 
   const generalTabItem = () => {
     switch (generalActiveIndex) {

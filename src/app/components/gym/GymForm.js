@@ -30,8 +30,7 @@ const GymForm = ({ gym, setChangeGym }) => {
     }
 
     if (gym?.id) {
-      // edit
-      const response = await editGym(gym.id, gymValue);
+      const response = await editGym(gymValue);
 
       if (response.status === 200) {
         setChangeGym(false);

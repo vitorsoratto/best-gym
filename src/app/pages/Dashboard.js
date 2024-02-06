@@ -35,6 +35,7 @@ const Dashboard = () => {
 
         if (response.status === 200) {
           setUser(response.data);
+          setActiveTab(<GymTab user={response.data} />);
         }
       }
     };
@@ -44,7 +45,7 @@ const Dashboard = () => {
 
   const [user, setUser] = useState({});
   const [generalActiveIndex, setGeneralActiveIndex] = useState(0);
-  const [activeTab, setActiveTab] = useState(<GymTab user={user} />);
+  const [activeTab, setActiveTab] = useState(null);
 
   const tabItens = [
     {
